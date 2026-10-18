@@ -17794,6 +17794,7 @@ int desugar_dynamic_const_get(Compiler *c) {
     if (recv < 0 || (nt_kind(nt, recv) != NK_ConstantReadNode && nt_kind(nt, recv) != NK_ConstantPathNode)) continue;
     const char *mn = nt_str(nt, recv, "name");
     if (!mn) continue;
+    if (is_object_root(mn)) continue;
     /* the module's first body carries the generated methods */
     int first = -1;
     for (int m = 0; m < n0 && first < 0; m++) {

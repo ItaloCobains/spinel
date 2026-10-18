@@ -856,7 +856,7 @@ int emit_call_reflection_arms(Compiler *c, int id, Buf *b, const NodeTable *nt, 
         const char *rcv_nm = (rcv_ty && (sp_streq(rcv_ty, "ConstantReadNode") ||
                                          sp_streq(rcv_ty, "ConstantPathNode"))) ? nt_str(nt, recv, "name") : NULL;
         int rcid = rcv_nm ? comp_class_index(c, rcv_nm) : -1;
-        if (rcid >= 0) {
+        if (rcid >= 0 && !is_object_root(rcv_nm)) {
           const char *qn = class_ruby_name(c, rcid); if (!qn) qn = c->classes[rcid].name;
           buf_printf(b, "\"uninitialized constant %s::%s\"", qn, cg_qm);
         }
